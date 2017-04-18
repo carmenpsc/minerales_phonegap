@@ -34,6 +34,21 @@ framework7.onPageInit("registro", function(){
                             framework7.addNotification({
                                 message: 'Registro completado con éxito.',
                                 hold: 4000})
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                console.log("ERROR");
+                                console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+                                framework7.addNotification({
+                                    message: 'Ha ocurrido un problema durante el registro.',
+                                    hold: 4000})
+                                }
+                            });
+                        }
+                        else{
+                            framework7.addNotification({
+                                message: 'Este correo electrónico ya está en uso.',
+                                hold: 4000})
+                            }
                         },
                         error: function(jqXHR, textStatus, errorThrown){
                             console.log("ERROR");
@@ -41,27 +56,10 @@ framework7.onPageInit("registro", function(){
                             framework7.addNotification({
                                 message: 'Ha ocurrido un problema durante el registro.',
                                 hold: 4000})
-                        }
+                            }
+                        });
                     });
-                }
-                else{
-                    framework7.addNotification({
-                        message: 'Este correo electrónico ya está en uso.',
-                        hold: 4000})
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log("ERROR");
-                console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
-                framework7.addNotification({
-                    message: 'Ha ocurrido un problema durante el registro.',
-                    hold: 4000})
-            }
-        });
-    });
-});
-
-
+                });
 
 framework7.onPageInit("login", function(){
     $$('#loginButton').on('click',function(event){
@@ -84,7 +82,12 @@ framework7.onPageInit("login", function(){
                         framework7.addNotification({
                             message: 'Inicio de sesión correcto.',
                             hold: 4000});
-                        mainView.router.loadPage('listaMinerales.html');
+                        //Cambia de página
+                        mainView.router.loadPage({
+                            url: 'listaMinerales.html',
+                            reload: true,
+                            animatePages: true
+                        });
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -93,16 +96,61 @@ framework7.onPageInit("login", function(){
                     framework7.addNotification({
                         message: 'Ha ocurrido un problema verificando los datos de acceso.',
                         hold: 4000})
+                    }
+                });
+            });
+        });
+
+framework7.onPageInit("listaMinerales", function(){
+    $.ajax({
+        url: 'https://minerales.herokuapp.com/minerales',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data){
+            console.log("SUCESS");
+            console.log(data);
+            if(data.length === 0){
+                framework7.addNotification({
+                    message: 'No se ha registrado ningún mineral.',
+                    hold: 4000})
+                }
+                else{
+                    var myList = framework7.virtualList('#listaMinerales', {
+                        items: data,
+                        template: '<li class="swipeout">'+
+                                    '<div class="swipeout-content">'+
+                                        '<a href="#" class="item-link item-content">'+
+                                            '<div class="item-media"><i class="icon icon-f7">camera_fill</i></div>'+
+                                            '<div class="item-inner">'+
+                                                '<div class="item-title">{{nombre}}</div>'+
+                                                '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
+                                            '</div>'+
+                                        '</a>'+
+                                    '</div>'+
+                                    '<div class="swipeout-actions-right">'+
+                                        '<a class="bg-green" href="#">Modificar</a>'+
+                                        '<a href="#" class="swipeout-delete" data-confirm="¿Desea eliminar este mineral?"'+
+                                        'data-confirm-title="Eliminar mineral">Delete</a>'+
+                                    '</div>'+
+                                '</li>'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log("ERROR");
+                console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+                framework7.addNotification({
+                    message: 'Ha ocurrido un problema al buscar los minerales de la BD.',
+                    hold: 4000})
                 }
             });
         });
-    });
 
-    var app = {
-        initialize: function() {
-            document.addEventListener("deviceready", this.init, false);
-        },
-        init: function() {
+var app = {
+    initialize: function() {
+        document.addEventListener("deviceready", this.init, false);
+    },
+    init: function() {
 
-        }
-    };
+    }
+};
