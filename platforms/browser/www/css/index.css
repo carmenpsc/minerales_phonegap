@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+body{
+    font-family: 'Inconsolata', monospace !important;
+}
+
+label::after{
+    content: ':';
+}
+
+.content{
+    margin-top: 5% !important;
+    text-align: center;
+}
+
+.row{
+    margin-top: 5%;
+}
