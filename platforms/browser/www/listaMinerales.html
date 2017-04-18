@@ -1,4 +1,4 @@
-<div class="page" data-page="registro">
+<div class="page" data-page="listaMinerales">
     <div class="navbar">
         <div class="navbar-inner">
             <div class="center">Mis minerales</div>
@@ -9,35 +9,29 @@
             </div>
         </div>
     </div>
-    <div class="list-block">
-      <ul>
-        <li>
-          <a href="#" class="item-link item-content">
-            <div class="item-media"><i class="icon icon-f7">camera_fill</i></div>
-            <div class="item-inner">
-              <div class="item-title">Item title</div>
-              <div class="item-after"></div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="item-link item-content">
-            <div class="item-media"><i class="icon icon-f7">camera_fill</i></div>
-            <div class="item-inner">
-              <div class="item-title">Item with badge</div>
-              <div class="item-after"></div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="item-link item-content">
-            <div class="item-media"><i class="icon icon-f7">camera_fill</i></div>
-            <div class="item-inner">
-              <div class="item-title">Another item</div>
-              <div class="item-after"></div>
-            </div>
-          </a>
-        </li>
-      </ul>
+    <a href="#" class="floating-button color-pink">
+       <i class="icon icon-plus"></i>
+    </a>
+    <div class="page-content">
+        <div class="list-block">
+            <ul>
+                <li class="swipeout">
+                    <div class="swipeout-content">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-media"><i class="icon icon-f7">camera_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Item title</div>
+                                <div class="item-after"></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swipeout-actions-right">
+                        <a href="#">Action 1</a>
+                        <a href="#" class="swipeout-delete" data-confirm="¿Desea eliminar este mineral?"
+                        data-confirm-title="Eliminar mineral">Delete</a>                    
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

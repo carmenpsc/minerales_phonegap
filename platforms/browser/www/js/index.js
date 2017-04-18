@@ -84,7 +84,7 @@ framework7.onPageInit("login", function(){
                         framework7.addNotification({
                             message: 'Inicio de sesión correcto.',
                             hold: 4000});
-                        window.location.replace("listaMinerales.html");
+                        mainView.router.loadPage('listaMinerales.html');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
