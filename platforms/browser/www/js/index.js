@@ -128,8 +128,8 @@ framework7.onPageInit("listaMinerales", function(){
                                     '</div>'+
                                     '<div class="swipeout-actions-right">'+
                                         '<a class="bg-green" href="#">Modificar</a>'+
-                                        '<a onclick="app.eliminarMineral({{_id}})" href="#" class="swipeout-delete" data-confirm="¿Desea eliminar este mineral?"'+
-                                        'data-confirm-title="Eliminar mineral">Delete</a>'+
+                                        '<a onclick="confirmarBorrado({{_id}});" href="#" class="swipeout-delete"'+
+                                        '>Delete</a>'+
                                     '</div>'+
                                 '</li>'
                     });
@@ -143,7 +143,37 @@ framework7.onPageInit("listaMinerales", function(){
                     hold: 4000})
                 }
             });
+
         });
+
+function confirmarBorrado(id){
+    framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {
+        eliminarMineral(id);
+    });
+}
+
+function eliminarMineral(id){
+    console.log(id);
+    var url = "https://minerales.herokuapp.com/mineral/"+id;
+    $.ajax({
+        url: 'https://minerales.herokuapp.com/mineral/'+id,
+        type: 'DELETE',
+        success: function(){
+            framework7.addNotification({
+                message: 'Mineral elimando con éxito.',
+                hold: 4000})
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log("ERROR");
+                console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+                framework7.addNotification({
+                    message: 'Ha ocurrido un problema durante la eliminación del mineral.',
+                    hold: 4000})
+                }
+            });
+}
+
+
 
 var app = {
     initialize: function() {
@@ -151,23 +181,5 @@ var app = {
     },
     init: function() {
 
-    },
-    eliminarMineral: function(id){
-        $.ajax({
-            url: 'https://minerales.herokuapp.com/mineral/'+id,
-            type: 'DELETE',
-            success: function(){
-                framework7.addNotification({
-                    message: 'Mineral elimando con éxito.',
-                    hold: 4000})
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    console.log("ERROR");
-                    console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
-                    framework7.addNotification({
-                        message: 'Ha ocurrido un problema durante la eliminación del mineral.',
-                        hold: 4000})
-                    }
-                });
     }
 };
