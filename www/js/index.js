@@ -86,7 +86,6 @@ framework7.onPageInit("login", function(){
                         mainView.router.loadPage({
                             url: 'listaMinerales.html',
                             reload: true,
-                            animatePages: true
                         });
                     }
                 },
