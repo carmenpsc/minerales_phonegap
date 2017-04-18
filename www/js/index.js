@@ -128,7 +128,7 @@ framework7.onPageInit("listaMinerales", function(){
                                     '</div>'+
                                     '<div class="swipeout-actions-right">'+
                                         '<a class="bg-green" href="#">Modificar</a>'+
-                                        '<a href="#" class="swipeout-delete" data-confirm="¿Desea eliminar este mineral?"'+
+                                        '<a onclick="app.eliminarMineral({{_id}})" href="#" class="swipeout-delete" data-confirm="¿Desea eliminar este mineral?"'+
                                         'data-confirm-title="Eliminar mineral">Delete</a>'+
                                     '</div>'+
                                 '</li>'
@@ -151,5 +151,23 @@ var app = {
     },
     init: function() {
 
+    },
+    eliminarMineral: function(id){
+        $.ajax({
+            url: 'https://minerales.herokuapp.com/mineral/'+id,
+            type: 'DELETE',
+            success: function(){
+                framework7.addNotification({
+                    message: 'Mineral elimando con éxito.',
+                    hold: 4000})
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("ERROR");
+                    console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+                    framework7.addNotification({
+                        message: 'Ha ocurrido un problema durante la eliminación del mineral.',
+                        hold: 4000})
+                    }
+                });
     }
 };
