@@ -86,9 +86,10 @@ framework7.onPageInit("login", function(){
                         usuarioLogueado = data;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
                         //Cambia de página
-                        mainView.router.loadPage({
-                            url: 'listaMinerales.html',
+                        mainView.router.load({
+                            pageName: 'listaMinerales',
                             reload: true,
+                            ignoreCache: true
                         });
                     }
                 },
