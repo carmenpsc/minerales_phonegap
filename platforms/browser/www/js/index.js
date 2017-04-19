@@ -111,7 +111,7 @@ framework7.onPageInit("listaMinerales", function(){
         success: function(data){
             console.log("SUCESS");
             console.log(data);
-            if(data === 0){
+            if(typeof data[0].minerales === "undefined"){
                 framework7.addNotification({
                     message: 'No se ha registrado ningún mineral.',
                     hold: 4000})
