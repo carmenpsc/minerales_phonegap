@@ -1,3 +1,4 @@
+var usuarioLogueado = null;
 var $$ = Dom7;
 
 framework7 = new Framework7({
@@ -82,6 +83,8 @@ framework7.onPageInit("login", function(){
                         framework7.addNotification({
                             message: 'Inicio de sesión correcto.',
                             hold: 4000});
+                        usuarioLogueado = data;
+                        console.log("USUARIO LOGUEADO "+usuarioLogueado);
                         //Cambia de página
                         mainView.router.loadPage({
                             url: 'listaMinerales.html',
@@ -102,24 +105,25 @@ framework7.onPageInit("login", function(){
 
 framework7.onPageInit("listaMinerales", function(){
     $.ajax({
-        url: 'https://minerales.herokuapp.com/minerales',
+        url: 'https://minerales.herokuapp.com/minerales/'+usuarioLogueado._id,
         type: 'GET',
         dataType: 'json',
         success: function(data){
             console.log("SUCESS");
             console.log(data);
-            if(data.length === 0){
+            if(data === 0){
                 framework7.addNotification({
                     message: 'No se ha registrado ningún mineral.',
                     hold: 4000})
                 }
                 else{
+                    console.log(data[0].minerales);
                     var myList = framework7.virtualList('#listaMinerales', {
-                        items: data,
+                        items: data[0].minerales,
                         template: '<li class="swipeout">'+
                                     '<div class="swipeout-content">'+
                                         '<a href="#" class="item-link item-content">'+
-                                            '<div class="item-media"><i class="icon icon-f7">camera_fill</i></div>'+
+                                            '<div class="item-media"></div>'+
                                             '<div class="item-inner">'+
                                                 '<div class="item-title">{{nombre}}</div>'+
                                                 '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
@@ -128,7 +132,7 @@ framework7.onPageInit("listaMinerales", function(){
                                     '</div>'+
                                     '<div class="swipeout-actions-right">'+
                                         '<a class="bg-green" href="#">Modificar</a>'+
-                                        '<a onclick="app.confirmarBorrado("'+{{_id}}+'");" href="#" class="swipeout-delete"'+
+                                        '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
                                         '>Delete</a>'+
                                     '</div>'+
                                 '</li>'
@@ -153,28 +157,25 @@ var app = {
     init: function() {
 
     },
-    confirmarBorrado: function(id){
-        framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {
-            this.eliminarMineral(id);
-        });
-    },
     eliminarMineral: function(id){
-        var miId = "'"+id+"'";
-        $.ajax({
-            url: 'https://minerales.herokuapp.com/mineral/'+miId,
-            type: 'DELETE',
-            success: function(){
-                framework7.addNotification({
-                    message: 'Mineral elimando con éxito.',
-                    hold: 4000})
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    console.log("ERROR");
-                    console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+        console.log('https://minerales.herokuapp.com/mineral/'+usuarioLogueado._id+'/'+id);
+        framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {
+            $.ajax({
+                url: 'https://minerales.herokuapp.com/mineral/'+usuarioLogueado._id+'/'+id,
+                type: 'DELETE',
+                success: function(){
                     framework7.addNotification({
-                        message: 'Ha ocurrido un problema durante la eliminación del mineral.',
+                        message: 'Mineral elimando con éxito.',
                         hold: 4000})
-                    }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("ERROR");
+                        console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+                        framework7.addNotification({
+                            message: 'Ha ocurrido un problema durante la eliminación del mineral.',
+                            hold: 4000})
+                        }
+                    });
                 });
     }
 };
