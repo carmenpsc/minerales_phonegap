@@ -118,7 +118,7 @@ framework7.onPageInit("listaMinerales", function(){
                 }
                 else{
                     console.log(data[0].minerales);
-                    var myList = framework7.virtualList('#listaMinerales', {
+                    framework7.virtualList('#listaMinerales', {
                         items: data[0].minerales,
                         template: '<li class="swipeout">'+
                                     '<div class="swipeout-content">'+
