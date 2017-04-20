@@ -139,43 +139,61 @@ framework7.onPageBeforeAnimation("listaMinerales", function(){
             console.log("SUCESS");
             console.log(data);
             if(typeof data[0].minerales === "undefined"){
+                framework7.virtualList('#listaMinerales', {
+                    items: data[0].minerales,
+                    template: '<li class="swipeout">'+
+                                '<div class="swipeout-content">'+
+                                    '<a href="#" class="item-link item-content">'+
+                                        '<div class="item-media"></div>'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-title">{{nombre}}</div>'+
+                                            '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
+                                        '</div>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="swipeout-actions-right">'+
+                                    '<a class="bg-green" href="#">Modificar</a>'+
+                                    '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
+                                    '>Eliminar</a>'+
+                                '</div>'+
+                            '</li>'
+                });
                 framework7.addNotification({
                     message: 'No se ha registrado ningún mineral.',
                     hold: 4000})
-                }
-                else{
-                    console.log(data[0].minerales);
-                    framework7.virtualList('#listaMinerales', {
-                        items: data[0].minerales,
-                        template: '<li class="swipeout">'+
-                                    '<div class="swipeout-content">'+
-                                        '<a href="#" class="item-link item-content">'+
-                                            '<div class="item-media"></div>'+
-                                            '<div class="item-inner">'+
-                                                '<div class="item-title">{{nombre}}</div>'+
-                                                '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
-                                            '</div>'+
-                                        '</a>'+
-                                    '</div>'+
-                                    '<div class="swipeout-actions-right">'+
-                                        '<a class="bg-green" href="#">Modificar</a>'+
-                                        '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
-                                        '>Eliminar</a>'+
-                                    '</div>'+
-                                '</li>'
-                    });
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log("ERROR");
-                console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
-                framework7.addNotification({
-                    message: 'Ha ocurrido un problema al buscar los minerales de la BD.',
-                    hold: 4000})
-                }
-            });
-
-        });
+            }
+            else{
+                console.log(data[0].minerales);
+                framework7.virtualList('#listaMinerales', {
+                    items: data[0].minerales,
+                    template: '<li class="swipeout">'+
+                                '<div class="swipeout-content">'+
+                                    '<a href="#" class="item-link item-content">'+
+                                        '<div class="item-media"></div>'+
+                                        '<div class="item-inner">'+
+                                            '<div class="item-title">{{nombre}}</div>'+
+                                            '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
+                                        '</div>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="swipeout-actions-right">'+
+                                    '<a class="bg-green" href="#">Modificar</a>'+
+                                    '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
+                                    '>Eliminar</a>'+
+                                '</div>'+
+                            '</li>'
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("ERROR");
+            console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
+            framework7.addNotification({
+                message: 'Ha ocurrido un problema al buscar los minerales de la BD.',
+                hold: 4000})
+        }
+    });
+});
 
 var app = {
     initialize: function() {
