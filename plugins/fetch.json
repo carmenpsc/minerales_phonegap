@@ -166,5 +166,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-hybrid": {
+        "source": {
+            "type": "local",
+            "path": "/Users/carmenpenalver/Desktop/minerales_phonegap/HybridBridgePlugin-master"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -16,19 +16,19 @@
 
 <body class="theme-green">
     <div class="panel-overlay"></div>
-    <!--Opciones del menu-->
+    <!--MENU-->
     <div class="panel panel-left panel-cover">
         <p><i class="icon f7-icons">gear_fill</i> Administrador</p>
         <p><a href="#login" class="close-panel">Iniciar sesión</a></p>
         <p><a href="#registro" class="close-panel">Registro</a></p>
     </div>
-    <!--Zona de la vista-->
+    <!--VISTA-->
     <div class="views">
         <div class="view view-main">
             <div class="pages navbar-fixed">
                 <!--INDEX -->
                 <div data-page="index" class="page">
-                    <!--Menu-->
+                    <!--BARRA PRINCIPAL-->
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="center">MineralPSC</div>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--El contenido de la página-->
+                    <!-- CONTENIDO PRINCIPAL -->
                     <div class="page-content">
                       <div class="content-block-title">¡Bienvenido a mineralPSC!</div>
                       <div class="content-block">
@@ -55,6 +55,7 @@
 
                 <!-- LOGIN -->
                 <div class="page cached" data-page="login">
+                    <!--BARRA PRINCIPAL-->
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="center">Iniciar sesión</div>
@@ -65,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- CONTENIDO PRINCIPAL -->
                     <div class="page-content">
                         <form id="loginForm" class="list-block">
                             <ul>
@@ -100,6 +102,7 @@
 
                 <!-- LISTA DE MINERALES -->
                 <div class="page cached" data-page="listaMinerales">
+                    <!--BARRA PRINCIPAL-->
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="center">Mis minerales</div>
@@ -110,9 +113,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="floating-button color-green">
+                    <a onclick="app.addItem();" class="floating-button color-green">
                         <i class="icon icon-plus"></i>
                     </a>
+                    <!-- CONTENIDO PRINCIPAL -->
                     <div class="page-content">
                         <div id="listaMinerales" class="list-block virtual-list">
                         </div>
@@ -121,6 +125,7 @@
 
                 <!-- REGISTRO -->
                 <div class="page cached" data-page="registro">
+                    <!--BARRA PRINCIPAL-->
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="center">Regístrate</div>
@@ -131,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- CONTENIDO PRINCIPAL -->
                     <div class="page-content">
                         <form id="registroForm" class="list-block">
                             <ul>

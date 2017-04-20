@@ -1,16 +1,25 @@
+//En esta variable se almacena el usuario que esta actualmente logueado
 var usuarioLogueado = null;
-var $$ = Dom7;
 
+//Se inicializa framework7 con su configuración correspondiente
+var $$ = Dom7;
 framework7 = new Framework7({
     material: true,
     swipePanel: 'left'
 });
-
 var mainView = framework7.addView('.view-main', {
     dynamicNavbar: true,
     domCache: true
 });
 
+/*
+    Cada vez que se inicia la página de registro
+    se abrirá un formulario donde se añadirán los campos para
+    registrar un nuevo adminsitrador.
+    El botón del formulario mediante ajax se comunica con la API rest para
+    añadir dicho usuario adminsitador al sistema.
+    Antes se verifica que el correo que se introduce no exista ya en el sistema.
+*/
 framework7.onPageInit("registro", function(){
     $$('#registroButton').on('click', function(event){
         event.preventDefault();
@@ -62,6 +71,13 @@ framework7.onPageInit("registro", function(){
                     });
                 });
 
+/*
+    Cada vez que se inicia la página de login
+    se abrirá un formulario donde se introducirán las credenciales del administrador.
+    El botón del formulario mediante ajax se comunica con la API rest para
+    verificar que ese usuario administrador esta registrado en el sistema.
+    Antes se verifica que el correo  y la contraseña que se introducen son correctas.
+*/
 framework7.onPageInit("login", function(){
     $$('#loginButton').on('click',function(event){
         event.preventDefault();
@@ -83,12 +99,16 @@ framework7.onPageInit("login", function(){
                         framework7.addNotification({
                             message: 'Inicio de sesión correcto.',
                             hold: 4000});
+
+                        //Se almacena el usuario logueado
                         usuarioLogueado = data;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
-                        //Cambia de página
-                        mainView.router.loadPage({
-                            url: 'listaMinerales.html',
-                            reload: true,
+
+                        //Cambia de página a listado de minerales de cada administrador
+                        mainView.router.load({
+                            pageName: 'listaMinerales',
+                            force: true,
+                            ignoreCache: true
                         });
                     }
                 },
@@ -103,7 +123,14 @@ framework7.onPageInit("login", function(){
             });
         });
 
-framework7.onPageInit("listaMinerales", function(){
+/*
+    Cada vez que se inicia la página de listado de minerales
+    se podrá visualizar la lista de minerales asociada a cada administrador.
+    Para ello y mediante ajax phonegap se comunica con la API rest y se crea una lista virtual dinamica
+    con el nombre y densidad de cada mineral.
+    Al mover cada mineral a la izquierda se verán dos botones: Modificar y Eliminar.
+*/
+framework7.onPageBeforeAnimation("listaMinerales", function(){
     $.ajax({
         url: 'https://minerales.herokuapp.com/minerales/'+usuarioLogueado._id,
         type: 'GET',
@@ -133,7 +160,7 @@ framework7.onPageInit("listaMinerales", function(){
                                     '<div class="swipeout-actions-right">'+
                                         '<a class="bg-green" href="#">Modificar</a>'+
                                         '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
-                                        '>Delete</a>'+
+                                        '>Eliminar</a>'+
                                     '</div>'+
                                 '</li>'
                     });
@@ -157,6 +184,12 @@ var app = {
     init: function() {
 
     },
+    /*
+        Este método se llama al hacer click en el botón ELIMINAR de cada una de las
+        filas de la lista de minerales, se accioná un modal que pregunta si se desea eliminar dicho mineral
+        y se conecta con la API rest para llevar a cabo esta función.
+        Se pasa el ID del mineral a eliminar.
+    */
     eliminarMineral: function(id){
         console.log('https://minerales.herokuapp.com/mineral/'+usuarioLogueado._id+'/'+id);
         framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {

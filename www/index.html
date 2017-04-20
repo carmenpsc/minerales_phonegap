@@ -16,19 +16,19 @@
 
 <body class="theme-green">
     <div class="panel-overlay"></div>
-    <!--Opciones del menu-->
+    <!--MENU-->
     <div class="panel panel-left panel-cover">
         <p><i class="icon f7-icons">gear_fill</i> Administrador</p>
-        <p><a href="login.html" class="close-panel">Iniciar sesión</a></p>
-        <p><a href="registro.html" class="close-panel">Registro</a></p>
+        <p><a href="#login" class="close-panel">Iniciar sesión</a></p>
+        <p><a href="#registro" class="close-panel">Registro</a></p>
     </div>
-    <!--Zona de la vista-->
+    <!--VISTA-->
     <div class="views">
         <div class="view view-main">
             <div class="pages navbar-fixed">
-                <!--Index como pagina principal-->
+                <!--INDEX -->
                 <div data-page="index" class="page">
-                    <!--Menu-->
+                    <!--BARRA PRINCIPAL-->
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="center">MineralPSC</div>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--El contenido de la página-->
+                    <!-- CONTENIDO PRINCIPAL -->
                     <div class="page-content">
                       <div class="content-block-title">¡Bienvenido a mineralPSC!</div>
                       <div class="content-block">
@@ -52,6 +52,155 @@
                       </div>
                     </div>
                 </div>
+
+                <!-- LOGIN -->
+                <div class="page cached" data-page="login">
+                    <!--BARRA PRINCIPAL-->
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="center">Iniciar sesión</div>
+                            <div class="right">
+                                <a href="#" class="open-panel link icon-only right">
+                                    <i class="icon icon-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENIDO PRINCIPAL -->
+                    <div class="page-content">
+                        <form id="loginForm" class="list-block">
+                            <ul>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">at_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="email" id="correoElectronico" name="correoElectronico" placeholder="Correo electrónico">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">lock_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="content-block">
+                                <p class="buttons-row">
+                                    <a id="loginButton" class="button button-raised button-fill color-green">Iniciar sesión</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- LISTA DE MINERALES -->
+                <div class="page cached" data-page="listaMinerales">
+                    <!--BARRA PRINCIPAL-->
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="center">Mis minerales</div>
+                            <div class="right">
+                                <a href="#" class="open-panel link icon-only right">
+                                    <i class="icon icon-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="floating-button color-green">
+                        <i class="icon icon-plus"></i>
+                    </a>
+                    <!-- CONTENIDO PRINCIPAL -->
+                    <div class="page-content">
+                        <div id="listaMinerales" class="list-block virtual-list">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REGISTRO -->
+                <div class="page cached" data-page="registro">
+                    <!--BARRA PRINCIPAL-->
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="center">Regístrate</div>
+                            <div class="right">
+                                <a href="#" class="open-panel link icon-only right">
+                                    <i class="icon icon-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENIDO PRINCIPAL -->
+                    <div class="page-content">
+                        <form id="registroForm" class="list-block">
+                            <ul>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">person_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="text" id="nombre" name="nombre"  placeholder="Nombre">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">person_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">home_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="text" id="entidad" name="entidad" placeholder="Entidad">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">at_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="email" id="correoElectronico" name="correoElectronico" placeholder="Correo electrónico">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-media"><i class="icon f7-icons">lock_fill</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="content-block">
+                                <p class="buttons-row">
+                                    <a id="registroButton" class="button button-raised button-fill color-green">Registrarse</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

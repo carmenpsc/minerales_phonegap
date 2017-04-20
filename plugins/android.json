@@ -40,6 +40,9 @@
         "cordova-plugin-globalization": {
             "PACKAGE_NAME": "com.minerales"
         },
+        "cordova-plugin-hybrid": {
+            "PACKAGE_NAME": "com.minerales"
+        },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.minerales"
         },
