@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.minerales.NuevoMineralActivity"
+    tools:showIn="@layout/activity_nuevo_mineral">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="1dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        app:layout_constraintGuide_begin="600dp"
+        android:orientation="vertical" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteY="13dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textNombre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:layout_weight="0.76"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textCodigo">
+
+                <EditText
+                    android:id="@+id/nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Nombre"
+                    android:inputType="text"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="13dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerHabito"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:layout_weight="0.76"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Habito"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textNombre"
+                app:met_floatingLabel="normal" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerClasificacion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Clasificación"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerHabito"
+                app:met_floatingLabel="normal" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textDensidad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerClasificacion">
+
+                <EditText
+                    android:id="@+id/densidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Densidad"
+                    android:inputType="number"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="13dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerDureza"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Dureza"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textDensidad"
+                app:met_floatingLabel="normal" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerTenacidad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Tenacidad"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerDureza"
+                app:met_floatingLabel="normal" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerRotura"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Rotura"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerTenacidad"
+                app:met_floatingLabel="normal" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerBrillo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Brillo"
+                app:layout_constraintHorizontal_bias="0.511"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerRotura"
+                app:met_floatingLabel="normal" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textColor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerBrillo">
+
+                <EditText
+                    android:id="@+id/color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Color"
+                    android:inputType="text"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="13dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textColorRaya"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textColor">
+
+                <EditText
+                    android:id="@+id/colorRaya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Color de la raya"
+                    android:inputType="text"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="13dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textButtonAñadirMineral"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textColorRaya">
+
+                <Button
+                    android:id="@+id/buttonAñadirMineral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:text="Añadir mineral"
+                    android:textColor="@android:color/background_light" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

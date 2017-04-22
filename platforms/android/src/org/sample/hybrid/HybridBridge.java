@@ -22,6 +22,7 @@ public class HybridBridge extends CordovaPlugin {
                 String className = args.getString(1);
                 Context context = cordova.getActivity().getApplicationContext();
                 Intent intent = new Intent(context,Class.forName(className));
+                itemsList.clear();
                 itemsList.add(item);
                 intent.putStringArrayListExtra("items", itemsList);
                 cordova.startActivityForResult(this,intent,1);

@@ -7,6 +7,19 @@ framework7 = new Framework7({
     material: true,
     swipePanel: 'left'
 });
+
+//Now we add our callback for initial page
+framework7.onPageInit('index', function (page) {
+    alert("PARANDOOOOOOOO");
+    if(usuarioLogueado != null){
+         mainView.router.load({
+            pageName: 'listaMinerales',
+            force: true,
+            ignoreCache: true
+        });
+    }
+}).trigger();
+
 var mainView = framework7.addView('.view-main', {
     dynamicNavbar: true,
     domCache: true
@@ -101,8 +114,10 @@ framework7.onPageInit("login", function(){
                             hold: 4000});
 
                         //Se almacena el usuario logueado
-                        usuarioLogueado = data;
+                        usuarioLogueado = data._id;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
+                        $('#registro').hide();
+                        $('#listadoM').show();
 
                         //Cambia de página a listado de minerales de cada administrador
                         mainView.router.load({
@@ -131,8 +146,8 @@ framework7.onPageInit("login", function(){
     Al mover cada mineral a la izquierda se verán dos botones: Modificar y Eliminar.
 */
 framework7.onPageBeforeAnimation("listaMinerales", function(){
-    $.ajax({
-        url: 'https://minerales.herokuapp.com/minerales/'+usuarioLogueado._id,
+      $.ajax({
+        url: 'https://minerales.herokuapp.com/minerales/'+usuarioLogueado,
         type: 'GET',
         dataType: 'json',
         success: function(data){
@@ -140,23 +155,8 @@ framework7.onPageBeforeAnimation("listaMinerales", function(){
             console.log(data);
             if(typeof data[0].minerales === "undefined"){
                 framework7.virtualList('#listaMinerales', {
-                    items: data[0].minerales,
-                    template: '<li class="swipeout">'+
-                                '<div class="swipeout-content">'+
-                                    '<a href="#" class="item-link item-content">'+
-                                        '<div class="item-media"></div>'+
-                                        '<div class="item-inner">'+
-                                            '<div class="item-title">{{nombre}}</div>'+
-                                            '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
-                                        '</div>'+
-                                    '</a>'+
-                                '</div>'+
-                                '<div class="swipeout-actions-right">'+
-                                    '<a class="bg-green" href="#">Modificar</a>'+
-                                    '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
-                                    '>Eliminar</a>'+
-                                '</div>'+
-                            '</li>'
+                    items: [],
+                    template: ""
                 });
                 framework7.addNotification({
                     message: 'No se ha registrado ningún mineral.',
@@ -198,9 +198,13 @@ framework7.onPageBeforeAnimation("listaMinerales", function(){
 var app = {
     initialize: function() {
         document.addEventListener("deviceready", this.init, false);
+        alert("HOLII");
+
     },
     init: function() {
-
+        if(usuarioLogueado === null){
+            $('#listadoM').hide();
+        }
     },
     /*
         Este método se llama al hacer click en el botón ELIMINAR de cada una de las
@@ -209,10 +213,10 @@ var app = {
         Se pasa el ID del mineral a eliminar.
     */
     eliminarMineral: function(id){
-        console.log('https://minerales.herokuapp.com/mineral/'+usuarioLogueado._id+'/'+id);
+        console.log('https://minerales.herokuapp.com/mineral/'+usuarioLogueado+'/'+id);
         framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {
             $.ajax({
-                url: 'https://minerales.herokuapp.com/mineral/'+usuarioLogueado._id+'/'+id,
+                url: 'https://minerales.herokuapp.com/mineral/'+usuarioLogueado+'/'+id,
                 type: 'DELETE',
                 success: function(){
                     framework7.addNotification({
@@ -230,7 +234,7 @@ var app = {
                 });
     },
     addItem: function() {
-         HybridBridge.addItem(null, "com.minerales.NuevoMineralActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
+         HybridBridge.addItem(usuarioLogueado, "com.minerales.NuevoMineralActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
      }
 
 };

@@ -1,82 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/miEstilo"
+    android:id="@+id/layoutAñadirMineral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.minerales.NuevoMineralActivity">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="369dp"
-        android:layout_height="495dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="-98dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintRight_toLeftOf="@+id/guideline2"
-        android:layout_marginRight="0dp"
-        app:layout_constraintHorizontal_bias="0.577"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="1.0">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/miEstilo.AppBarOverlay">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/codigo"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/miEstilo.PopupOverlay"
+            app:title="@string/nuevoMineral" />
 
-            <EditText
-                android:id="@+id/textCodigo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:editable="false"
-                android:hint="Código"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.AppBarLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <include layout="@layout/content_nuevo_mineral" />
 
-            <EditText
-                android:id="@+id/textNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Código"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline"
-        app:layout_constraintGuide_begin="1dp"
-        android:orientation="vertical" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline2"
-        app:layout_constraintGuide_begin="382dp"
-        android:orientation="vertical" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline3"
-        app:layout_constraintGuide_begin="-1dp"
-        android:orientation="horizontal" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline4"
-        app:layout_constraintGuide_begin="510dp"
-        android:orientation="horizontal" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
