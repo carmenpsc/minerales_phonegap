@@ -8,18 +8,6 @@ framework7 = new Framework7({
     swipePanel: 'left'
 });
 
-//Now we add our callback for initial page
-framework7.onPageInit('index', function (page) {
-    alert("PARANDOOOOOOOO");
-    if(usuarioLogueado != null){
-         mainView.router.load({
-            pageName: 'listaMinerales',
-            force: true,
-            ignoreCache: true
-        });
-    }
-}).trigger();
-
 var mainView = framework7.addView('.view-main', {
     dynamicNavbar: true,
     domCache: true
@@ -116,15 +104,13 @@ framework7.onPageInit("login", function(){
                         //Se almacena el usuario logueado
                         usuarioLogueado = data._id;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
+
+                        //Acomodo el menu
                         $('#registro').hide();
                         $('#listadoM').show();
 
-                        //Cambia de página a listado de minerales de cada administrador
-                        mainView.router.load({
-                            pageName: 'listaMinerales',
-                            force: true,
-                            ignoreCache: true
-                        });
+                        //Me comunico con android
+                        app.addItem();
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -138,103 +124,17 @@ framework7.onPageInit("login", function(){
             });
         });
 
-/*
-    Cada vez que se inicia la página de listado de minerales
-    se podrá visualizar la lista de minerales asociada a cada administrador.
-    Para ello y mediante ajax phonegap se comunica con la API rest y se crea una lista virtual dinamica
-    con el nombre y densidad de cada mineral.
-    Al mover cada mineral a la izquierda se verán dos botones: Modificar y Eliminar.
-*/
-framework7.onPageBeforeAnimation("listaMinerales", function(){
-      $.ajax({
-        url: 'https://minerales.herokuapp.com/minerales/'+usuarioLogueado,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data){
-            console.log("SUCESS");
-            console.log(data);
-            if(typeof data[0].minerales === "undefined"){
-                framework7.virtualList('#listaMinerales', {
-                    items: [],
-                    template: ""
-                });
-                framework7.addNotification({
-                    message: 'No se ha registrado ningún mineral.',
-                    hold: 4000})
-            }
-            else{
-                console.log(data[0].minerales);
-                framework7.virtualList('#listaMinerales', {
-                    items: data[0].minerales,
-                    template: '<li class="swipeout">'+
-                                '<div class="swipeout-content">'+
-                                    '<a href="#" class="item-link item-content">'+
-                                        '<div class="item-media"></div>'+
-                                        '<div class="item-inner">'+
-                                            '<div class="item-title">{{nombre}}</div>'+
-                                            '<div class="item-after"><span class="badge">{{densidad}}</span></div>'+
-                                        '</div>'+
-                                    '</a>'+
-                                '</div>'+
-                                '<div class="swipeout-actions-right">'+
-                                    '<a class="bg-green" href="#">Modificar</a>'+
-                                    '<a onclick=\'app.eliminarMineral(\"{{codigo}}\");\' href="#" class="swipeout-delete"'+
-                                    '>Eliminar</a>'+
-                                '</div>'+
-                            '</li>'
-                });
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log("ERROR");
-            console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
-            framework7.addNotification({
-                message: 'Ha ocurrido un problema al buscar los minerales de la BD.',
-                hold: 4000})
-        }
-    });
-});
-
 var app = {
     initialize: function() {
         document.addEventListener("deviceready", this.init, false);
-        alert("HOLII");
-
     },
     init: function() {
         if(usuarioLogueado === null){
             $('#listadoM').hide();
         }
     },
-    /*
-        Este método se llama al hacer click en el botón ELIMINAR de cada una de las
-        filas de la lista de minerales, se accioná un modal que pregunta si se desea eliminar dicho mineral
-        y se conecta con la API rest para llevar a cabo esta función.
-        Se pasa el ID del mineral a eliminar.
-    */
-    eliminarMineral: function(id){
-        console.log('https://minerales.herokuapp.com/mineral/'+usuarioLogueado+'/'+id);
-        framework7.confirm('¿Está seguro de que desea eliminar el mineral?', 'Eliminar mineral', function () {
-            $.ajax({
-                url: 'https://minerales.herokuapp.com/mineral/'+usuarioLogueado+'/'+id,
-                type: 'DELETE',
-                success: function(){
-                    framework7.addNotification({
-                        message: 'Mineral elimando con éxito.',
-                        hold: 4000})
-                    },
-                    error: function(jqXHR, textStatus, errorThrown){
-                        console.log("ERROR");
-                        console.log(jqXHR.status + "\n" + textStatus + "\n" + errorThrown);
-                        framework7.addNotification({
-                            message: 'Ha ocurrido un problema durante la eliminación del mineral.',
-                            hold: 4000})
-                        }
-                    });
-                });
-    },
     addItem: function() {
-         HybridBridge.addItem(usuarioLogueado, "com.minerales.NuevoMineralActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
+         HybridBridge.addItem(usuarioLogueado, "com.minerales.ListaMineralesActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
      }
 
 };

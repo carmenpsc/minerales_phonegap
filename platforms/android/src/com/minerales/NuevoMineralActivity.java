@@ -71,17 +71,14 @@ public class NuevoMineralActivity extends CordovaActivity{
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutAñadirMineral);
 
+        usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
+
         crearAdapterList(HABITO_LIST, R.id.spinnerHabito);
         crearAdapterList(CLASIFICACION_LIST, R.id.spinnerClasificacion);
         crearAdapterList(DUREZA_LIST, R.id.spinnerDureza);
         crearAdapterList(TENACIDAD_LIST, R.id.spinnerTenacidad);
         crearAdapterList(ROTURA_LIST, R.id.spinnerRotura);
         crearAdapterList(BRILLO_LIST, R.id.spinnerBrillo);
-
-        Intent intent= this.getIntent();
-        if (intent.hasExtra("items")){
-            usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
-        }
 
         //Inputs
         textNombre = (EditText)findViewById(R.id.nombre);
@@ -156,8 +153,6 @@ public class NuevoMineralActivity extends CordovaActivity{
                 }
             }
         });
-
-        setResult(RESULT_OK, intent);
     }
 
     /*
@@ -207,8 +202,8 @@ public class NuevoMineralActivity extends CordovaActivity{
                                 }
                             });
                     bar.show();
-                    Intent listadoMinerales = new Intent(getApplicationContext(), ListaMineralesActivity.class);
-                    startActivity(listadoMinerales);
+                    Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+                    startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -231,12 +226,4 @@ public class NuevoMineralActivity extends CordovaActivity{
 
     }
 
-    /*
-
-     */
-    private void limpiarFormulario(){
-        Intent refresh = new Intent(this, NuevoMineralActivity.class);
-        startActivity(refresh);//Start the same Activity
-        finish(); //finish Activity.
-    }
 }

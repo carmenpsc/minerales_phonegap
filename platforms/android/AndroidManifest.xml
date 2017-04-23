@@ -52,7 +52,10 @@
         <activity
             android:name=".NuevoMineralActivity"
             android:label="@string/nuevoMineral" />
-        <activity android:name=".ListaMineralesActivity"></activity>
+        <activity
+            android:name=".ListaMineralesActivity"
+            android:label="@string/title_activity_lista_minerales"
+            android:theme="@style/miEstilo.NoActionBar"></activity>
     </application>
 
 </manifest>

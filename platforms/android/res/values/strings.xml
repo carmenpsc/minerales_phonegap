@@ -6,4 +6,5 @@
     <string name="activity_name">@string/launcher_name</string>
     <string name="title_activity_prueba">prueba</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_lista_minerales">ListaMineralesActivity</string>
 </resources>
