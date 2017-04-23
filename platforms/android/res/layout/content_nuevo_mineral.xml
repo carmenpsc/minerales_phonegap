@@ -9,6 +9,12 @@
     tools:context="com.minerales.NuevoMineralActivity"
     tools:showIn="@layout/activity_nuevo_mineral">
 
+    <ImageView
+        android:id="@+id/qrPrueba"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@color/colorPrimary" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
