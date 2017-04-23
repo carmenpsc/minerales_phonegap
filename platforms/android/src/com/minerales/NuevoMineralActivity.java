@@ -203,6 +203,7 @@ public class NuevoMineralActivity extends CordovaActivity{
                             });
                     bar.show();
                     Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+                    finish();
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();

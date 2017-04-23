@@ -41,7 +41,6 @@ public class ListaMineralesActivity extends CordovaActivity {
     //Boton que va al formulario de añadir minerl
     private FloatingActionButton añadirMineral;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,32 +51,23 @@ public class ListaMineralesActivity extends CordovaActivity {
         añadirMineral = (FloatingActionButton) findViewById(R.id.nuevoMineralBoton);
 
         Intent intent= this.getIntent();
+        boolean pedo = intent.hasExtra("items");
         if (intent.hasExtra("items")){
             usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
         }
+
+        crearAdapterList();
 
         añadirMineral.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v){
                 Intent intent = new Intent(getApplicationContext(), NuevoMineralActivity.class);
                 intent.putExtra("usuarioLogueado", usuarioLogueado);
                 startActivity(intent);
+                finish();
             }
         });
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        crearAdapterList();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        crearAdapterList();
-    }
-
 
     /*
         Método que añade a los spinner sus items correspondientes
@@ -86,7 +76,7 @@ public class ListaMineralesActivity extends CordovaActivity {
         arrayListMinerales = new ArrayList<String>();
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String pedo = URL_LISTA_MINERALES+usuarioLogueado;
+
         client.get(URL_LISTA_MINERALES+usuarioLogueado, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -98,9 +88,9 @@ public class ListaMineralesActivity extends CordovaActivity {
                             String codigo = lista.getJSONObject(i).getString("codigo");
                             String nombre = lista.getJSONObject(i).getString("nombre");
 
-                            arrayListMinerales.add("Código: "+codigo+"\n"+"Nombre: "+nombre);
+                            arrayListMinerales.add(codigo+"-"+nombre);
                         }
-                        MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext());
+                        MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext(), usuarioLogueado, coordinatorLayout);
 
                         ListView listViewMinerales = (ListView) findViewById(R.id.listViewMinerales);
                         listViewMinerales.setAdapter(adapter);

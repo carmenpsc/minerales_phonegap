@@ -1,6 +1,8 @@
 package com.minerales;
 
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +10,38 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by carmenpenalver on 23/4/17.
  */
 
 public class MyAdapter extends BaseAdapter implements ListAdapter {
+    String URL_ELIMINAR_MINERAL="https://minerales.herokuapp.com/mineral/";
+
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
+    private String usuarioLogueado;
+    private CoordinatorLayout coordinatorLayout;
 
-    public MyAdapter(ArrayList<String> list, Context context) {
+    public MyAdapter(ArrayList<String> list, Context context, String usuarioLogueado, CoordinatorLayout coordinatorLayout) {
         this.list = list;
         this.context = context;
+        this.usuarioLogueado = usuarioLogueado;
+        this.coordinatorLayout = coordinatorLayout;
     }
 
     @Override
@@ -60,6 +79,39 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
         botonBorrarMineral.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //Elimina el mineral de la listView
+                list.remove(position);
+                notifyDataSetChanged();
+
+                //Cojo el codigo del mineral a borrar
+                RelativeLayout row = (RelativeLayout) v.getParent();
+                TextView idTextView = (TextView)row.getChildAt(0);
+                String codigo = idTextView.getText().toString().split("-")[0];
+
+                //ELiminar de la base de datos el mineral
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.delete(URL_ELIMINAR_MINERAL+usuarioLogueado+"/"+codigo, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                        Snackbar bar = Snackbar.make(coordinatorLayout, "Mineral eliminado con éxito.", Snackbar.LENGTH_LONG)
+                                .setAction("CLOSE", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                });
+                        bar.show();
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Snackbar bar = Snackbar.make(coordinatorLayout, "Error al eliminar el mineral.", Snackbar.LENGTH_LONG)
+                                .setAction("CLOSE", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                });
+                        bar.show();
+                    }
+                });
 
             }
         });

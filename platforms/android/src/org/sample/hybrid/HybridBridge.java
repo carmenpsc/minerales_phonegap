@@ -38,7 +38,6 @@ public class HybridBridge extends CordovaPlugin {
         }
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         itemsList = data.getStringArrayListExtra("items");
     }
 
