@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.apache.cordova.CordovaActivity;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,16 +30,10 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class NuevoMineralActivity extends CordovaActivity{
+public class NuevoMineralActivity extends CordovaActivity {
 
     String URL_ADD_MINERAL = "https://minerales.herokuapp.com/mineral/";
-
-    String[] HABITO_LIST = {"Isómetricos o cúbicos", "Alargados en una dirección", "Alargados en dos direcciones","Formas intermedias", "Granulares", "Lamelares o laminares", "Oolíticos", "Concrecciones", "Dendrítico o arborescente", "Estalactitas"};
-    String[] CLASIFICACION_LIST = {"Elementos", "Sulfuros", "Sulfosales", "Óxidos", "Haluros", "Carbonatos", "Fofatos", "Sulfatos", "Silicatos"};
-    String[] DUREZA_LIST = {"Talco", "Yeso", "Calcita", "Fluorita", "Apatito", "Ortosa", "Cuarzo", "Topacio", "Carindon", "Diamante"};
-    String[] TENACIDAD_LIST = {"Frágil", "Maleable", "Séctil", "Dúctil", "Flexible", "Elástico"};
-    String[] ROTURA_LIST = {"Fractura", "Exfoliación"};
-    String[] BRILLO_LIST = {"Metálico", "Semimetálico", "No metálico"};
+    String URL_LISTA_MINERALES = "https://minerales.herokuapp.com/minerales/";
 
     //Varibales
     private EditText textNombre;
@@ -60,6 +56,7 @@ public class NuevoMineralActivity extends CordovaActivity{
 
     //UsuarioLogueado
     private String usuarioLogueado;
+    private String codigoMineral;
 
     //
     private CoordinatorLayout coordinatorLayout;
@@ -73,19 +70,19 @@ public class NuevoMineralActivity extends CordovaActivity{
 
         usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
 
-        crearAdapterList(HABITO_LIST, R.id.spinnerHabito);
-        crearAdapterList(CLASIFICACION_LIST, R.id.spinnerClasificacion);
-        crearAdapterList(DUREZA_LIST, R.id.spinnerDureza);
-        crearAdapterList(TENACIDAD_LIST, R.id.spinnerTenacidad);
-        crearAdapterList(ROTURA_LIST, R.id.spinnerRotura);
-        crearAdapterList(BRILLO_LIST, R.id.spinnerBrillo);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.HABITO_LIST, R.id.spinnerHabito);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.CLASIFICACION_LIST, R.id.spinnerClasificacion);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.DUREZA_LIST, R.id.spinnerDureza);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.TENACIDAD_LIST, R.id.spinnerTenacidad);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.ROTURA_LIST, R.id.spinnerRotura);
+        ListadosUtil.crearAdapterList(this, ListadosUtil.BRILLO_LIST, R.id.spinnerBrillo);
 
         //Inputs
-        textNombre = (EditText)findViewById(R.id.nombre);
+        textNombre = (EditText) findViewById(R.id.nombre);
         textDensidad = (EditText) findViewById(R.id.densidad);
 
         //Spinners
-        spinnerHabito = (MaterialBetterSpinner)findViewById(R.id.spinnerHabito);
+        spinnerHabito = (MaterialBetterSpinner) findViewById(R.id.spinnerHabito);
         spinnerHabito.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -93,7 +90,7 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        spinnerClasificacion = (MaterialBetterSpinner)findViewById(R.id.spinnerClasificacion);
+        spinnerClasificacion = (MaterialBetterSpinner) findViewById(R.id.spinnerClasificacion);
         spinnerClasificacion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -101,7 +98,7 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        spinnerDureza = (MaterialBetterSpinner)findViewById(R.id.spinnerDureza);
+        spinnerDureza = (MaterialBetterSpinner) findViewById(R.id.spinnerDureza);
         spinnerDureza.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -109,7 +106,7 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        spinnerTenacidad = (MaterialBetterSpinner)findViewById(R.id.spinnerTenacidad);
+        spinnerTenacidad = (MaterialBetterSpinner) findViewById(R.id.spinnerTenacidad);
         spinnerTenacidad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -117,7 +114,7 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        spinnerRotura = (MaterialBetterSpinner)findViewById(R.id.spinnerRotura);
+        spinnerRotura = (MaterialBetterSpinner) findViewById(R.id.spinnerRotura);
         spinnerRotura.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -125,7 +122,7 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        spinnerBrillo = (MaterialBetterSpinner)findViewById(R.id.spinnerBrillo);
+        spinnerBrillo = (MaterialBetterSpinner) findViewById(R.id.spinnerBrillo);
         spinnerBrillo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -133,12 +130,14 @@ public class NuevoMineralActivity extends CordovaActivity{
             }
         });
 
-        textColor = (EditText)findViewById(R.id.color);
+        textColor = (EditText) findViewById(R.id.color);
         textColorRaya = (EditText) findViewById(R.id.colorRaya);
 
+        //Ultimo codigo del mineral
+        codigoMineral();
 
         //Boton
-        btnAñadir = (Button)findViewById(R.id.buttonAñadirMineral);
+        btnAñadir = (Button) findViewById(R.id.buttonAñadirMineral);
 
         //Implementamos el evento click del botón para añadir un nuevo mineral conectandonos con la API rest
         btnAñadir.setOnClickListener(new View.OnClickListener() {
@@ -155,17 +154,6 @@ public class NuevoMineralActivity extends CordovaActivity{
         });
     }
 
-    /*
-        Método que añade a los spinner sus items correspondientes
-     */
-    private void crearAdapterList(String[] nombreLista, int idLayout){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                R.layout.lista_spinner, nombreLista);
-
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)
-                findViewById(idLayout);
-        materialDesignSpinner.setAdapter(arrayAdapter);
-    }
 
     /*
         Este método se conecta con la API rest y añade un mineral a la base de datos Mongodb a través de
@@ -177,20 +165,33 @@ public class NuevoMineralActivity extends CordovaActivity{
 
         //Se crea el json con los datos del mineral a introducir
         JSONObject jsonObj = new JSONObject();
+        jsonObj.put("codigo", codigoMineral);
         jsonObj.put("nombre", textNombre.getText().toString());
+        if (textSpinnerHabito == null)
+            textSpinnerHabito = "Isometricos o cubicos";
         jsonObj.put("habito", textSpinnerHabito);
+        if (textSpinnerClasificacion == null)
+            textSpinnerClasificacion = "Elementos";
         jsonObj.put("clasificacion", textSpinnerClasificacion);
         jsonObj.put("densidad", textDensidad.getText().toString());
+        if (textSpinnerDureza == null)
+            textSpinnerDureza = "Talco";
         jsonObj.put("dureza", textSpinnerDureza);
+        if (textSpinnerTenacidad == null)
+            textSpinnerTenacidad = "Fragil";
         jsonObj.put("tenacidad", textSpinnerTenacidad);
+        if (textSpinnerRotura == null)
+            textSpinnerRotura = "Fractura";
         jsonObj.put("rotura", textSpinnerRotura);
+        if (textSpinnerBrillo == null)
+            textSpinnerBrillo = "Metalico";
         jsonObj.put("brillo", textSpinnerBrillo);
         jsonObj.put("color", textColor.getText().toString());
         jsonObj.put("colorRaya", textColorRaya.getText().toString());
 
         StringEntity entity = new StringEntity(jsonObj.toString());
 
-        client.post(this,URL_ADD_MINERAL+usuarioLogueado,entity,"application/json",new JsonHttpResponseHandler(){
+        client.post(this, URL_ADD_MINERAL + usuarioLogueado, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -203,7 +204,7 @@ public class NuevoMineralActivity extends CordovaActivity{
                             });
                     bar.show();
                     Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
-                    finish();
+                    intent.putExtra("usuarioLogueado", usuarioLogueado);
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -227,4 +228,39 @@ public class NuevoMineralActivity extends CordovaActivity{
 
     }
 
+    private void codigoMineral() {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.get(URL_LISTA_MINERALES + usuarioLogueado, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                if (response.length() >= 1) {
+                    try {
+                        JSONObject objeto = (JSONObject) response.get(0);
+                        if(objeto.has("minerales") && objeto.getJSONArray("minerales").length() > 0){
+                            JSONArray lista = objeto.getJSONArray("minerales");
+                            Integer codigo = Integer.parseInt(lista.getJSONObject(lista.length() - 1).getString("codigo"));
+                            codigoMineral = String.valueOf(codigo + 1);
+                        }
+                        else{
+                            codigoMineral = "0";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Snackbar bar = Snackbar.make(coordinatorLayout, "Error al conectarse con la base de datos.", Snackbar.LENGTH_LONG)
+                        .setAction("CLOSE", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                bar.show();
+            }
+        });
+
+    }
 }

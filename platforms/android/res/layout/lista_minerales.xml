@@ -21,18 +21,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
         android:background="@android:color/holo_red_dark"
-        android:text="Borrar" />
+        android:text="Borrar"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/botonModificarMineral"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/botonBorrarMineral"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/botonBorrarMineral"
         android:background="@color/colorPrimary"
-        android:text="Modificar" />
+        android:text="Editar"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/botonVerMineral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/botonModificarMineral"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Ver"
+        android:textSize="12sp" />
 
 </RelativeLayout>

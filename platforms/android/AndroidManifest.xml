@@ -55,6 +55,14 @@
         <activity
             android:name=".ListaMineralesActivity"
             android:label="@string/title_activity_lista_minerales"
+            android:theme="@style/miEstilo.NoActionBar" />
+        <activity
+            android:name=".ModificarMineralActivity"
+            android:label="@string/title_activity_modificar_mineral"
+            android:theme="@style/miEstilo.NoActionBar"></activity>
+        <activity
+            android:name=".VerMineralActivity"
+            android:label="@string/title_activity_ver_mineral"
             android:theme="@style/miEstilo.NoActionBar"></activity>
     </application>
 

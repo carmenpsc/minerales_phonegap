@@ -54,6 +54,8 @@ public class ListaMineralesActivity extends CordovaActivity {
         boolean pedo = intent.hasExtra("items");
         if (intent.hasExtra("items")){
             usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
+        }else{
+            usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
         }
 
         crearAdapterList();
@@ -63,7 +65,6 @@ public class ListaMineralesActivity extends CordovaActivity {
                 Intent intent = new Intent(getApplicationContext(), NuevoMineralActivity.class);
                 intent.putExtra("usuarioLogueado", usuarioLogueado);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -83,17 +84,29 @@ public class ListaMineralesActivity extends CordovaActivity {
                 if(response.length() >= 1){
                     try {
                         JSONObject objeto = (JSONObject) response.get(0);
-                        JSONArray lista = objeto.getJSONArray("minerales");
-                        for (int i=0; i<lista.length();i++){
-                            String codigo = lista.getJSONObject(i).getString("codigo");
-                            String nombre = lista.getJSONObject(i).getString("nombre");
+                        if(objeto.has("minerales") && objeto.getJSONArray("minerales").length() > 0){
+                            JSONArray lista = objeto.getJSONArray("minerales");
+                            for (int i=0; i<lista.length();i++){
+                                String codigo = lista.getJSONObject(i).getString("codigo");
+                                String nombre = lista.getJSONObject(i).getString("nombre");
 
-                            arrayListMinerales.add(codigo+"-"+nombre);
+                                arrayListMinerales.add(codigo+"-"+nombre);
+                            }
+                            MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext(), usuarioLogueado, coordinatorLayout);
+
+                            ListView listViewMinerales = (ListView) findViewById(R.id.listViewMinerales);
+                            listViewMinerales.setAdapter(adapter);
                         }
-                        MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext(), usuarioLogueado, coordinatorLayout);
+                        else{
+                            Snackbar bar = Snackbar.make(coordinatorLayout, "En este momento no hay minerales en la lista.", Snackbar.LENGTH_LONG)
+                                    .setAction("CLOSE", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                        }
+                                    });
+                            bar.show();
+                        }
 
-                        ListView listViewMinerales = (ListView) findViewById(R.id.listViewMinerales);
-                        listViewMinerales.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

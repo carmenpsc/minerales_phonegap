@@ -7,4 +7,7 @@
     <string name="title_activity_prueba">prueba</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_lista_minerales">ListaMineralesActivity</string>
+    <string name="title_activity_modificar_mineral">ModificarMineralActivity</string>
+    <string name="title_activity_ver_mineral">VerMineralActivity</string>
+
 </resources>

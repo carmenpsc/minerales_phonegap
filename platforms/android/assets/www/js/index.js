@@ -44,7 +44,9 @@ framework7.onPageInit("registro", function(){
                             console.log(data);
                             framework7.addNotification({
                                 message: 'Registro completado con éxito.',
-                                hold: 4000})
+                                hold: 4000});
+                            mainView.router.loadPage({pageName: 'login', ignoreCache: true, force: true});
+
                             },
                             error: function(jqXHR, textStatus, errorThrown){
                                 console.log("ERROR");
@@ -94,7 +96,7 @@ framework7.onPageInit("login", function(){
                 if(data == null){
                     framework7.addNotification({
                         message: 'Usuario o contraseña incorrectos.',
-                        hold: 4000})
+                        hold: 4000});
                     }
                     else{
                         framework7.addNotification({

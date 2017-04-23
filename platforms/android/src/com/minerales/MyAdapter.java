@@ -1,6 +1,7 @@
 package com.minerales;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.ResponseHandler;
 
 /**
  * Created by carmenpenalver on 23/4/17.
@@ -75,6 +78,8 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         Button botonBorrarMineral = (Button)view.findViewById(R.id.botonBorrarMineral);
         Button botonModificarMineral = (Button)view.findViewById(R.id.botonModificarMineral);
+        Button botonVerMineral = (Button)view.findViewById(R.id.botonVerMineral);
+
 
         botonBorrarMineral.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -90,10 +95,10 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
 
                 //ELiminar de la base de datos el mineral
                 AsyncHttpClient client = new AsyncHttpClient();
-                client.delete(URL_ELIMINAR_MINERAL+usuarioLogueado+"/"+codigo, new JsonHttpResponseHandler() {
+                client.delete(URL_ELIMINAR_MINERAL+usuarioLogueado+"/"+codigo, new AsyncHttpResponseHandler() {
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                        Snackbar bar = Snackbar.make(coordinatorLayout, "Mineral eliminado con éxito.", Snackbar.LENGTH_LONG)
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        Snackbar bar = Snackbar.make(coordinatorLayout, "El mineral se ha eliminado con éxito.", Snackbar.LENGTH_LONG)
                                 .setAction("CLOSE", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -101,8 +106,9 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
                                 });
                         bar.show();
                     }
+
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                         Snackbar bar = Snackbar.make(coordinatorLayout, "Error al eliminar el mineral.", Snackbar.LENGTH_LONG)
                                 .setAction("CLOSE", new View.OnClickListener() {
                                     @Override
@@ -118,6 +124,32 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
         botonModificarMineral.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //Cojo el codigo del mineral a borrar
+                RelativeLayout row = (RelativeLayout) v.getParent();
+                TextView idTextView = (TextView)row.getChildAt(0);
+                String codigo = idTextView.getText().toString().split("-")[0];
+
+                Intent modifciarMineralActivity = new Intent(context, ModificarMineralActivity.class);
+                modifciarMineralActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                modifciarMineralActivity.putExtra("usuarioLogueado", usuarioLogueado);
+                modifciarMineralActivity.putExtra("codigoMineral",codigo);
+                context.startActivity(modifciarMineralActivity);
+            }
+        });
+
+        botonVerMineral.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //Cojo el codigo del mineral a borrar
+                RelativeLayout row = (RelativeLayout) v.getParent();
+                TextView idTextView = (TextView)row.getChildAt(0);
+                String codigo = idTextView.getText().toString().split("-")[0];
+
+                Intent verMineralActivity = new Intent(context, VerMineralActivity.class);
+                verMineralActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                verMineralActivity.putExtra("usuarioLogueado", usuarioLogueado);
+                verMineralActivity.putExtra("codigoMineral",codigo);
+                context.startActivity(verMineralActivity);
 
             }
         });
