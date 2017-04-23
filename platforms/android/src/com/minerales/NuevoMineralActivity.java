@@ -3,7 +3,10 @@ package com.minerales;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +35,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
@@ -284,10 +292,40 @@ public class NuevoMineralActivity extends CordovaActivity {
                 }
             }
             ((ImageView) findViewById(R.id.qrPrueba)).setImageBitmap(bmp);
+            guardarImagen(bmp);
 
         } catch (WriterException e) {
             e.printStackTrace();
         }
+    }
+
+    private void guardarImagen(Bitmap bmp){
+        String path = Environment.getExternalStorageDirectory().toString();
+        OutputStream fOutputStream = null;
+        File file = new File(path, "screen.jpg");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        try {
+            fOutputStream = new FileOutputStream(file);
+
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fOutputStream);
+
+            fOutputStream.flush();
+            fOutputStream.close();
+
+            MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show();
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show();
+            return;
+        }
+       // sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
 
     }
 }
