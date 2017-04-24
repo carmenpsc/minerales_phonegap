@@ -163,6 +163,11 @@ android {
         }
     }
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "2048M"
+    }
+
     defaultConfig {
         versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
         applicationId privateHelpers.extractStringFromManifest("package")
@@ -170,6 +175,7 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+        multiDexEnabled true
     }
 
     lintOptions {
