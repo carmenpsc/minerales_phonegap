@@ -1,6 +1,8 @@
 package com.minerales;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -35,6 +37,22 @@ public class LectorQRActivity extends AppCompatActivity {
     private CoordinatorLayout coordinatorLayout;
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISO_CAMARA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lector_qr);
@@ -58,16 +76,10 @@ public class LectorQRActivity extends AppCompatActivity {
         }
 
         // creo el detector qr
-        barcodeDetector =
-                new BarcodeDetector.Builder(getApplicationContext())
-                        .setBarcodeFormats(Barcode.QR_CODE)
-                        .build();
+        barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
 
         // creo la camara fuente
-        cameraSource = new CameraSource
-                .Builder(getApplicationContext(), barcodeDetector)
-                .setRequestedPreviewSize(640, 480)
-                .build();
+        cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
 
         camaraView = (SurfaceView) findViewById(R.id.camera_view);
 
@@ -75,8 +87,6 @@ public class LectorQRActivity extends AppCompatActivity {
         camaraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-
-
                 // verifico si el usuario dio los permisos para la camara
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     try {
@@ -104,7 +114,7 @@ public class LectorQRActivity extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
-
+        
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -127,21 +137,11 @@ public class LectorQRActivity extends AppCompatActivity {
                 barcodeDetector.release();
             }
         });
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISO_CAMARA: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                } else {
+        Bitmap myQRCode = BitmapFactory.decodeStream(
+                getAssets().open("myqrcode.jpg")
+        );
 
-                }
-                return;
-            }
-        }
     }
 }
