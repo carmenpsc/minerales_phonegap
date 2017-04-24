@@ -9,8 +9,8 @@
     tools:showIn="@layout/activity_lector_qr">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
@@ -24,14 +24,30 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:weightSum="1">
 
         <SurfaceView
             android:id="@+id/camera_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_weight="0.61" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/code_info"
+            android:layout_toRightOf="@+id/camera_view"
+            android:textSize="20sp"
+            android:layout_marginLeft="16dp"
+            android:text="Nothing to read."
+            android:layout_alignParentTop="true"
+            app:layout_constraintTop_toBottomOf="@+id/camera_view"
+            />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

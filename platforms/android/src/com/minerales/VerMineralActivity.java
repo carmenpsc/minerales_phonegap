@@ -1,11 +1,20 @@
 package com.minerales;
 
+import android.*;
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,12 +36,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class VerMineralActivity extends CordovaActivity {
+
+    private static final int PERMISO_EXTERNAL = 1 ;
+
 
     String URL_SELECT_MINERAL = "https://minerales.herokuapp.com/mineral/";
 
@@ -41,6 +57,7 @@ public class VerMineralActivity extends CordovaActivity {
     private String codigo;
 
     //Datos actuales del formulario mineral
+    private String codigoActual;
     private String nombreActual;
     private String habitoActual;
     private String clasificacionActual;
@@ -74,6 +91,22 @@ public class VerMineralActivity extends CordovaActivity {
         setContentView(R.layout.activity_ver_mineral);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutVerMineral);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISO_EXTERNAL);
+
+            }
+        }
 
         usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
         codigo = (String) getIntent().getExtras().getSerializable("codigoMineral");
@@ -130,7 +163,6 @@ public class VerMineralActivity extends CordovaActivity {
                         JSONObject result = new JSONObject(new String(responseBody));
                         JSONArray array = result.getJSONArray("minerales");
                         JSONObject objeto = (JSONObject) array.get(0);
-                        generarQR(objeto.toString());
                         //JSONObject objeto = (JSONObject) array.get(0);
                         nombreActual = objeto.getString("nombre");
                         habitoActual = objeto.getString("habito");
@@ -143,6 +175,7 @@ public class VerMineralActivity extends CordovaActivity {
                         colorActual = objeto.getString("color");
                         colorRayaActual = objeto.getString("colorRaya");
                         rellenarCampos();
+                        generarQR(objeto.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -162,6 +195,21 @@ public class VerMineralActivity extends CordovaActivity {
     }
 
     /*
+        Método que pide permisos al usuario para usar la sdCard
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISO_EXTERNAL: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+            }
+        }
+    }
+
+    /*
         Metodo que genera el codigo qr del mineral
      */
     private void generarQR(String text) {
@@ -178,9 +226,67 @@ public class VerMineralActivity extends CordovaActivity {
             }
             imageView = (ImageView) findViewById(R.id.qrImagen);
             imageView.setImageBitmap(bmp);
+            guardarImagen(bmp);
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
 
+    /*
+        Método que guarda la imagen en el movil
+     */
+    public void guardarImagen(Bitmap ImageToSave) {
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/minerales";
+        File dir = new File(file_path);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        File file = new File(dir, codigo+"-"+nombreActual + ".jpg");
+
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+
+            ImageToSave.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+            MakeSureFileWasCreatedThenMakeAvabile(file);
+            Snackbar bar = Snackbar.make(coordinatorLayout, "QR guardado con exito en "+file_path, Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            bar.show();
+        }
+
+        catch(FileNotFoundException e) {
+            Snackbar bar = Snackbar.make(coordinatorLayout, "Error al guardar el QR.", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            bar.show();
+        }
+        catch(IOException e) {
+            Snackbar bar = Snackbar.make(coordinatorLayout, "Error al guardar el QR.", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            bar.show();        }
+
+    }
+    private void MakeSureFileWasCreatedThenMakeAvabile(File file){
+        MediaScannerConnection.scanFile(getApplicationContext(),
+                new String[] { file.toString() } , null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+
+                    public void onScanCompleted(String path, Uri uri) {
+                    }
+                });
+    }
 }

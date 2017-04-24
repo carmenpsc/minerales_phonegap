@@ -17,6 +17,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -34,20 +35,20 @@ public class LectorQRActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private SurfaceView camaraView;
+    private TextView barcodeInfo;
     private CoordinatorLayout coordinatorLayout;
 
+    /*
+        Método que pide permisos al usuario para usar la camara
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISO_CAMARA: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                } else {
-
                 }
-                return;
             }
         }
     }
@@ -82,11 +83,34 @@ public class LectorQRActivity extends AppCompatActivity {
         cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
 
         camaraView = (SurfaceView) findViewById(R.id.camera_view);
+        barcodeInfo = (TextView) findViewById(R.id.code_info);
 
         // listener de ciclo de vida de la camara
         camaraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+                    @Override
+                    public void release() {
+                    }
+
+                    @Override
+                    public void receiveDetections(Detector.Detections<Barcode> detections) {
+                        final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+                        if (barcodes.size() != 0) {
+                            barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
+                                public void run() {
+                                    barcodeInfo.setText(    // Update the TextView
+                                            barcodes.valueAt(0).displayValue
+                                    );
+                                }
+                            });
+                        }
+
+                        barcodeDetector.release();
+                    }
+                });
                 // verifico si el usuario dio los permisos para la camara
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     try {
@@ -114,34 +138,6 @@ public class LectorQRActivity extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
-        
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-            }
-
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-                if (barcodes.size() != 0) {
-                    Snackbar bar = Snackbar.make(coordinatorLayout, barcodes.valueAt(0).displayValue.toString(), Snackbar.LENGTH_LONG)
-                            .setAction("CLOSE", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            });
-                    bar.show();                }
-
-                barcodeDetector.release();
-            }
-        });
-
-
-        Bitmap myQRCode = BitmapFactory.decodeStream(
-                getAssets().open("myqrcode.jpg")
-        );
 
     }
 }

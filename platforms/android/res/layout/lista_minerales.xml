@@ -17,7 +17,7 @@
 
     <Button
         android:id="@+id/botonBorrarMineral"
-        android:layout_width="wrap_content"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/botonModificarMineral"
-        android:layout_width="wrap_content"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/botonBorrarMineral"
@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/botonVerMineral"
-        android:layout_width="wrap_content"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/botonModificarMineral"
