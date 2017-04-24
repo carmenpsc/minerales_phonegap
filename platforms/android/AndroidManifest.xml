@@ -31,6 +31,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:hardwareAccelerated="true"
@@ -59,10 +61,14 @@
         <activity
             android:name=".ModificarMineralActivity"
             android:label="@string/title_activity_modificar_mineral"
-            android:theme="@style/miEstilo.NoActionBar"></activity>
+            android:theme="@style/miEstilo.NoActionBar" />
         <activity
             android:name=".VerMineralActivity"
             android:label="@string/title_activity_ver_mineral"
+            android:theme="@style/miEstilo.NoActionBar" />
+        <activity
+            android:name=".LectorQRActivity"
+            android:label="@string/title_activity_lector_qr"
             android:theme="@style/miEstilo.NoActionBar"></activity>
     </application>
 

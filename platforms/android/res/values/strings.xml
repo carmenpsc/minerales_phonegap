@@ -9,5 +9,6 @@
     <string name="title_activity_lista_minerales">ListaMineralesActivity</string>
     <string name="title_activity_modificar_mineral">ModificarMineralActivity</string>
     <string name="title_activity_ver_mineral">VerMineralActivity</string>
+    <string name="title_activity_lector_qr">LectorQRActivity</string>
 
 </resources>

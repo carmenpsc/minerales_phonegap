@@ -137,6 +137,9 @@ var app = {
     },
     addItem: function() {
          HybridBridge.addItem(usuarioLogueado, "com.minerales.ListaMineralesActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
-     }
+     },
+      irCapturar: function() {
+           HybridBridge.addItem(null, "com.minerales.LectorQRActivity", function(){console.log("Hybrid Bridge Success")},function(e){console.log("Hybrid Bridge Error" + e)});
+       }
 
 };
