@@ -176,7 +176,8 @@ public class VerMineralActivity extends CordovaActivity {
                         colorActual = objeto.getString("color");
                         colorRayaActual = objeto.getString("colorRaya");
                         rellenarCampos();
-                        generarQR(objeto.toString());
+                        String cadena = generarCadena();
+                        generarQR(cadena);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -210,6 +211,23 @@ public class VerMineralActivity extends CordovaActivity {
         }
     }
 
+    /*
+        Método para crear una string bonita en el QR
+    */
+    private String generarCadena(){
+        String cadena = "Nombre del mineral: "+nombreActual+"\n"+
+                "Habito del mineral: "+habitoActual+"\n"+
+                "Clasificación del mineral: "+clasificacionActual+"\n"+
+                "Densidad del mineral: "+densidadActual+"\n"+
+                "Dureza del mineral: "+durezaActual+"\n"+
+                "Tenacidad del mineral: "+tenacidadActual+"\n"+
+                "Rotura del mineral: "+roturaActual+"\n"+
+                "Brillo del mineral: "+brilloActual+"\n"+
+                "Color del mineral: "+colorActual+"\n"+
+                "Color de la raya del mineral: "+colorRayaActual;
+
+        return  cadena;
+    }
     /*
         Metodo que genera el codigo qr del mineral
      */
