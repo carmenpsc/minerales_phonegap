@@ -1,5 +1,6 @@
 package com.minerales;
 
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +29,7 @@ import org.apache.cordova.CordovaActivity;
 
 import java.io.IOException;
 
-public class LectorQRActivity extends AppCompatActivity {
+public class LectorQRActivity extends Activity {
 
     private static final int PERMISO_CAMARA = 1 ;
 
@@ -60,6 +61,7 @@ public class LectorQRActivity extends AppCompatActivity {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.qrLayout);
 
+        //Se piden los permisos necesarios para acceder a la camara
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {

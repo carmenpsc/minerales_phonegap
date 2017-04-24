@@ -92,6 +92,7 @@ public class VerMineralActivity extends CordovaActivity {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutVerMineral);
 
+        //Se piden los permisos necesarios para escribir en el telefono y guardar la imagen
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {

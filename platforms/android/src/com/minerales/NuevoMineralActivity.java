@@ -246,6 +246,7 @@ public class NuevoMineralActivity extends CordovaActivity {
 
     }
 
+    //Busca el utlimo codigo de un mineral y le suma uno
     private void codigoMineral() {
         AsyncHttpClient client = new AsyncHttpClient();
 

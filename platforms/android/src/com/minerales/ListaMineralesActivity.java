@@ -50,6 +50,7 @@ public class ListaMineralesActivity extends CordovaActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutListaMinerales);
         añadirMineral = (FloatingActionButton) findViewById(R.id.nuevoMineralBoton);
 
+        //Se obtiene el usuario logueado
         Intent intent= this.getIntent();
         if (intent.hasExtra("items")){
             usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
@@ -70,7 +71,7 @@ public class ListaMineralesActivity extends CordovaActivity {
     }
 
     /*
-        Método que añade a los spinner sus items correspondientes
+        Método que añade los minerales del administrador a la lista de sus minerales. Se comunica con la API
     */
     private void crearAdapterList(){
         arrayListMinerales = new ArrayList<String>();

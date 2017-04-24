@@ -124,7 +124,7 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
         botonModificarMineral.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Cojo el codigo del mineral a borrar
+                //Cojo el codigo del mineral a modificar
                 RelativeLayout row = (RelativeLayout) v.getParent();
                 TextView idTextView = (TextView)row.getChildAt(0);
                 String codigo = idTextView.getText().toString().split("-")[0];
@@ -140,7 +140,7 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
         botonVerMineral.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Cojo el codigo del mineral a borrar
+                //Cojo el codigo del mineral a ver
                 RelativeLayout row = (RelativeLayout) v.getParent();
                 TextView idTextView = (TextView)row.getChildAt(0);
                 String codigo = idTextView.getText().toString().split("-")[0];
