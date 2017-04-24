@@ -21,6 +21,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,30 +37,44 @@ import org.apache.cordova.CordovaActivity;
 
 import java.io.IOException;
 
-public class LectorQRActivity extends Activity {
+public class LectorQRActivity extends CordovaActivity {
+
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lector_qr);
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.qrLayout);
+
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             startActivityForResult(intent, 0);
         } catch (ActivityNotFoundException exception) {
-            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            Snackbar bar = Snackbar.make(coordinatorLayout, "Instale Barcode Scanner.", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            bar.show();
         }
     }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode == 0) && (resultCode == -1)) {
             updateUITextViews(data.getStringExtra("SCAN_RESULT"), data.getStringExtra("SCAN_RESULT_FORMAT"));
         } else {
-            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-        }
+            Snackbar bar = Snackbar.make(coordinatorLayout, "Instale Barcode Scanner.", Snackbar.LENGTH_LONG)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+            bar.show();        }
     }
 
     private void updateUITextViews(String scan_result, String scan_result_format) {
