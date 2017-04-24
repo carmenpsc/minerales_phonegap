@@ -279,6 +279,22 @@
                     tools:layout_editor_absoluteY="13dp" />
             </android.support.design.widget.TextInputLayout>
 
+            <ImageView
+                android:id="@+id/qrImagen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.76"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                app:layout_constraintHorizontal_bias="0.476"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+                app:layout_constraintRight_toLeftOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textColorRaya"
+                app:srcCompat="@color/colorPrimary" />
+
         </LinearLayout>
     </ScrollView>
 

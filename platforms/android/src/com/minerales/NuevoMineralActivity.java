@@ -1,8 +1,11 @@
 package com.minerales;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +14,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -205,7 +209,6 @@ public class NuevoMineralActivity extends CordovaActivity {
         jsonObj.put("colorRaya", textColorRaya.getText().toString());
 
         StringEntity entity = new StringEntity(jsonObj.toString());
-        generarQR(jsonObj.toString());
         client.post(this, URL_ADD_MINERAL + usuarioLogueado, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -252,19 +255,21 @@ public class NuevoMineralActivity extends CordovaActivity {
                 if (response.length() >= 1) {
                     try {
                         JSONObject objeto = (JSONObject) response.get(0);
-                        if(objeto.has("minerales") && objeto.getJSONArray("minerales").length() > 0){
+                        if (objeto.has("minerales") && objeto.getJSONArray("minerales").length() > 0) {
                             JSONArray lista = objeto.getJSONArray("minerales");
                             Integer codigo = Integer.parseInt(lista.getJSONObject(lista.length() - 1).getString("codigo"));
                             codigoMineral = String.valueOf(codigo + 1);
-                        }
-                        else{
+                        } else {
                             codigoMineral = "0";
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-            };
+            }
+
+            ;
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Snackbar bar = Snackbar.make(coordinatorLayout, "Error al conectarse con la base de datos.", Snackbar.LENGTH_LONG)
@@ -279,53 +284,4 @@ public class NuevoMineralActivity extends CordovaActivity {
 
     }
 
-    private void generarQR(String text){
-        QRCodeWriter writer = new QRCodeWriter();
-        try {
-            BitMatrix bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, 512, 512);
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
-                }
-            }
-            ((ImageView) findViewById(R.id.qrPrueba)).setImageBitmap(bmp);
-            guardarImagen(bmp);
-
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void guardarImagen(Bitmap bmp){
-        String path = Environment.getExternalStorageDirectory().toString();
-        OutputStream fOutputStream = null;
-        File file = new File(path, "screen.jpg");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-
-        try {
-            fOutputStream = new FileOutputStream(file);
-
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fOutputStream);
-
-            fOutputStream.flush();
-            fOutputStream.close();
-
-            MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show();
-            return;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show();
-            return;
-        }
-       // sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-
-    }
 }
