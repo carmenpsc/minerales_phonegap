@@ -67,7 +67,7 @@ public class ListaMineralesActivity extends CordovaActivity {
                 startActivity(intent);
             }
         });
-
+        setResult(RESULT_OK, intent);
     }
 
     /*

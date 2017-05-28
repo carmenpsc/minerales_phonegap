@@ -45,6 +45,7 @@ public class LectorQRActivity extends CordovaActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lector_qr);
+        Intent intentPG = this.getIntent();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.qrLayout);
 
@@ -61,6 +62,7 @@ public class LectorQRActivity extends CordovaActivity {
                     });
             bar.show();
         }
+        setResult(RESULT_OK, intentPG);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

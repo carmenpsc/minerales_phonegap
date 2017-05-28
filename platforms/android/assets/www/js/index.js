@@ -5,7 +5,8 @@ var usuarioLogueado = null;
 var $$ = Dom7;
 framework7 = new Framework7({
     material: true,
-    swipePanel: 'left'
+    swipePanel: 'left',
+    pushState: true
 });
 
 var mainView = framework7.addView('.view-main', {

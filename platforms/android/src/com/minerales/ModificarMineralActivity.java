@@ -273,6 +273,7 @@ public class ModificarMineralActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+                    intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("usuarioLogueado", usuarioLogueado);
                     startActivity(intent);
                 } catch (Exception e) {

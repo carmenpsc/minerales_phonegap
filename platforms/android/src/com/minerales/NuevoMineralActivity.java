@@ -222,6 +222,7 @@ public class NuevoMineralActivity extends CordovaActivity {
                             });
                     bar.show();
                     Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+                    intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("usuarioLogueado", usuarioLogueado);
                     startActivity(intent);
                 } catch (Exception e) {
