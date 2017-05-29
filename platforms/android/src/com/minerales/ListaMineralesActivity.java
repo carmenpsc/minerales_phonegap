@@ -51,7 +51,7 @@ public class ListaMineralesActivity extends CordovaActivity {
         añadirMineral = (FloatingActionButton) findViewById(R.id.nuevoMineralBoton);
 
         //Se obtiene el usuario logueado
-        Intent intent= this.getIntent();
+        Intent intent = this.getIntent();
         if (intent.hasExtra("items")){
             usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
         }else{
