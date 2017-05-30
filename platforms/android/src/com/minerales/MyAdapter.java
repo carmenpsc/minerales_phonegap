@@ -1,5 +1,6 @@
 package com.minerales;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
@@ -39,12 +40,14 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
     private Context context;
     private String usuarioLogueado;
     private CoordinatorLayout coordinatorLayout;
+    private Activity listaMineralesActivity;
 
-    public MyAdapter(ArrayList<String> list, Context context, String usuarioLogueado, CoordinatorLayout coordinatorLayout) {
+    public MyAdapter(ArrayList<String> list, Context context, String usuarioLogueado, CoordinatorLayout coordinatorLayout, Activity listaMineralesActivity) {
         this.list = list;
         this.context = context;
         this.usuarioLogueado = usuarioLogueado;
         this.coordinatorLayout = coordinatorLayout;
+        this.listaMineralesActivity = listaMineralesActivity;
     }
 
     @Override
@@ -129,11 +132,13 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
                 TextView idTextView = (TextView)row.getChildAt(0);
                 String codigo = idTextView.getText().toString().split("-")[0];
 
+
                 Intent modifciarMineralActivity = new Intent(context, ModificarMineralActivity.class);
                 modifciarMineralActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 modifciarMineralActivity.putExtra("usuarioLogueado", usuarioLogueado);
                 modifciarMineralActivity.putExtra("codigoMineral",codigo);
                 context.startActivity(modifciarMineralActivity);
+                listaMineralesActivity.finish();
             }
         });
 

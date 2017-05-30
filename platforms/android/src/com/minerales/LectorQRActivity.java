@@ -40,6 +40,23 @@ import java.io.IOException;
 public class LectorQRActivity extends CordovaActivity {
 
     private CoordinatorLayout coordinatorLayout;
+    private String data = "";
+
+    @Override
+    protected void onRestart() {
+        if(data.equals("")){
+            finish();
+        }
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        /*if(data.equals("")){
+            finish();
+        }*/
+        super.onResume();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +83,10 @@ public class LectorQRActivity extends CordovaActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode == 0) && (resultCode == -1)) {
+            this.data = data.getStringExtra("SCAN_RESULT_FORMAT");
             updateUITextViews(data.getStringExtra("SCAN_RESULT"), data.getStringExtra("SCAN_RESULT_FORMAT"));
         } else {
             Snackbar bar = Snackbar.make(coordinatorLayout, "Instale Barcode Scanner.", Snackbar.LENGTH_LONG)

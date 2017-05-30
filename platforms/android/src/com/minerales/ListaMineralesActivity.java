@@ -1,5 +1,6 @@
 package com.minerales;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -58,13 +59,14 @@ public class ListaMineralesActivity extends CordovaActivity {
             usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
         }
 
-        crearAdapterList();
+        crearAdapterList(this);
 
         añadirMineral.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v){
                 Intent intent = new Intent(getApplicationContext(), NuevoMineralActivity.class);
                 intent.putExtra("usuarioLogueado", usuarioLogueado);
                 startActivity(intent);
+                finish();
             }
         });
         setResult(RESULT_OK, intent);
@@ -73,7 +75,7 @@ public class ListaMineralesActivity extends CordovaActivity {
     /*
         Método que añade los minerales del administrador a la lista de sus minerales. Se comunica con la API
     */
-    private void crearAdapterList(){
+    private void crearAdapterList(final Activity a){
         arrayListMinerales = new ArrayList<String>();
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -92,7 +94,7 @@ public class ListaMineralesActivity extends CordovaActivity {
 
                                 arrayListMinerales.add(codigo+"-"+nombre);
                             }
-                            MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext(), usuarioLogueado, coordinatorLayout);
+                            MyAdapter adapter = new MyAdapter(arrayListMinerales, getApplicationContext(), usuarioLogueado, coordinatorLayout, a);
 
                             ListView listViewMinerales = (ListView) findViewById(R.id.listViewMinerales);
                             listViewMinerales.setAdapter(adapter);
