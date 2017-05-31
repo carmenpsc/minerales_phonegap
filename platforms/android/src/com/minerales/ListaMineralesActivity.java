@@ -1,14 +1,13 @@
 package com.minerales;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
@@ -51,6 +50,10 @@ public class ListaMineralesActivity extends MenuApp {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutListaMinerales);
         añadirMineral = (FloatingActionButton) findViewById(R.id.nuevoMineralBoton);
 
+        //Se añade el menu
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarListado);
+        setSupportActionBar(toolbar);
+
         //Se obtiene el usuario logueado
         intentPG = this.getIntent();
         if (intentPG.hasExtra("items")){
@@ -69,6 +72,7 @@ public class ListaMineralesActivity extends MenuApp {
                 finish();
             }
         });
+
     }
 
     /*
@@ -139,28 +143,6 @@ public class ListaMineralesActivity extends MenuApp {
     @Override
     public void onBackPressed() {
         cerrarSesion();
-        super.finish();
     }
-
-    public void cerrarSesion(){
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builder.setTitle("¡Hasta luego!");
-        builder.setMessage("¿Está seguro de que desea cerrar sesión y salir?");
-
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", null);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 
 }

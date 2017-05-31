@@ -2,15 +2,19 @@ package com.minerales;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.apache.cordova.CordovaActivity;
 
 /**
  * Created by carmenpenalver on 31/5/17.
  */
 
-public class MenuApp extends Activity{
+public class MenuApp extends AppCompatActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -37,6 +41,8 @@ public class MenuApp extends Activity{
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
             }
         });
 

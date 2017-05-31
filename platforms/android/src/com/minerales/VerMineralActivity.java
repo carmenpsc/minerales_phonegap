@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import android.widget.EditText;
@@ -85,6 +86,10 @@ public class VerMineralActivity extends MenuApp{
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutVerMineral);
 
+        //Se añade el menu
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarVer);
+        setSupportActionBar(toolbar);
+
         //Se piden los permisos necesarios para escribir en el telefono y guardar la imagen
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -127,6 +132,7 @@ public class VerMineralActivity extends MenuApp{
         textColorVerRaya = (EditText) findViewById(R.id.verColorRaya);
 
         buscarMineral();
+
     }
 
     private void rellenarCampos() {
@@ -227,7 +233,7 @@ public class VerMineralActivity extends MenuApp{
     private void generarQR(String text) {
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            BitMatrix bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, 512, 512);
+            BitMatrix bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, 256, 256);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
             Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);

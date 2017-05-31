@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class LectorQRActivity extends MenuApp {
         Intent intentPG = this.getIntent();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.qrLayout);
+
         // Se abre barcode scanner si está instalada en el dispositivo
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");

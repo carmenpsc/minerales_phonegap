@@ -13,12 +13,13 @@
         android:theme="@style/miEstilo.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarNuevo"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/miEstilo.PopupOverlay"
-            app:title="@string/nuevoMineral" />
+            app:title="Nuevo mineral" />
+
 
     </android.support.design.widget.AppBarLayout>
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -54,7 +55,7 @@ public class NuevoMineralActivity extends MenuApp {
     private String usuarioLogueado;
     private String codigoMineral;
 
-    //
+    //Layout
     private CoordinatorLayout coordinatorLayout;
 
     @Override
@@ -63,6 +64,10 @@ public class NuevoMineralActivity extends MenuApp {
         setContentView(R.layout.activity_nuevo_mineral);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutAñadirMineral);
+
+        //Se añade el menu
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarNuevo);
+        setSupportActionBar(toolbar);
 
         usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
 
