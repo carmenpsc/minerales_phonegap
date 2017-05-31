@@ -3,22 +3,16 @@ package com.minerales;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONArray;
@@ -26,12 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class ModificarMineralActivity extends AppCompatActivity {
+public class ModificarMineralActivity extends MenuApp {
 
     String URL_SELECT_MINERAL = "https://minerales.herokuapp.com/mineral/";
     String URL_MODIFICAR_MINERAL = "https://minerales.herokuapp.com/modificar/";
@@ -282,5 +275,15 @@ public class ModificarMineralActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Volver atras
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+        intent.putExtra("usuarioLogueado", usuarioLogueado);
+        startActivity(intent);
+        finish();
     }
 }

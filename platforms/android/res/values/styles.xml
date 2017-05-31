@@ -15,4 +15,13 @@
 
     <style name="miEstilo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@drawable/drawable</item>
+    </style>
+
 </resources>

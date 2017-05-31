@@ -1,23 +1,20 @@
 package com.minerales;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import org.apache.cordova.CordovaActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +23,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ListaMineralesActivity extends CordovaActivity {
+public class ListaMineralesActivity extends MenuApp {
 
     String URL_LISTA_MINERALES = "https://minerales.herokuapp.com/minerales/";
 
@@ -42,6 +39,9 @@ public class ListaMineralesActivity extends CordovaActivity {
     //Boton que va al formulario de añadir minerl
     private FloatingActionButton añadirMineral;
 
+    //Intent anterior
+    private Intent intentPG;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +52,9 @@ public class ListaMineralesActivity extends CordovaActivity {
         añadirMineral = (FloatingActionButton) findViewById(R.id.nuevoMineralBoton);
 
         //Se obtiene el usuario logueado
-        Intent intent = this.getIntent();
-        if (intent.hasExtra("items")){
-            usuarioLogueado = intent.getExtras().getStringArrayList("items").get(0);
+        intentPG = this.getIntent();
+        if (intentPG.hasExtra("items")){
+            usuarioLogueado = intentPG.getExtras().getStringArrayList("items").get(0);
         }else{
             usuarioLogueado = (String) getIntent().getExtras().getSerializable("usuarioLogueado");
         }
@@ -69,7 +69,6 @@ public class ListaMineralesActivity extends CordovaActivity {
                 finish();
             }
         });
-        setResult(RESULT_OK, intent);
     }
 
     /*
@@ -136,5 +135,32 @@ public class ListaMineralesActivity extends CordovaActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        cerrarSesion();
+        super.finish();
+    }
+
+    public void cerrarSesion(){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        builder.setTitle("¡Hasta luego!");
+        builder.setMessage("¿Está seguro de que desea cerrar sesión y salir?");
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
 }

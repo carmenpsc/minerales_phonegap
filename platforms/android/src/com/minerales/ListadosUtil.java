@@ -22,7 +22,7 @@ public class ListadosUtil extends CordovaActivity{
 
     /*
     Método que añade a los spinner sus items correspondientes
- */
+     */
     static void crearAdapterList(Activity activity, String[] nombreLista, int idLayout){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity,
                 R.layout.lista_spinner, nombreLista);

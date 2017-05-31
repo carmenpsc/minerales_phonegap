@@ -1,9 +1,7 @@
 package com.minerales;
 
-import android.*;
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,10 +13,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -28,10 +25,8 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import org.apache.cordova.CordovaActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,12 +35,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class VerMineralActivity extends CordovaActivity {
+public class VerMineralActivity extends MenuApp{
 
     private static final int PERMISO_EXTERNAL = 1 ;
 

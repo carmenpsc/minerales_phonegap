@@ -1,43 +1,17 @@
 package com.minerales;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.util.Linkify;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.ImageButton;
+
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
-import org.apache.cordova.CordovaActivity;
-
-import java.io.IOException;
-
-public class LectorQRActivity extends CordovaActivity {
+public class LectorQRActivity extends MenuApp {
 
     private CoordinatorLayout coordinatorLayout;
     private String data = "";
@@ -51,21 +25,13 @@ public class LectorQRActivity extends CordovaActivity {
     }
 
     @Override
-    protected void onResume() {
-        /*if(data.equals("")){
-            finish();
-        }*/
-        super.onResume();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lector_qr);
         Intent intentPG = this.getIntent();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.qrLayout);
-
+        // Se abre barcode scanner si está instalada en el dispositivo
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -82,6 +48,7 @@ public class LectorQRActivity extends CordovaActivity {
         setResult(RESULT_OK, intentPG);
     }
 
+    /*Método que se encarga de escanear el QR y mostrar el resultado por pantalla*/
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,6 +65,8 @@ public class LectorQRActivity extends CordovaActivity {
             bar.show();        }
     }
 
+
+    /*Método que añade a la activity lector QR la cadena de texto correspondiente al mineral escaneado*/
     private void updateUITextViews(String scan_result, String scan_result_format) {
         ((TextView)findViewById(R.id.tvFormat)).setText(scan_result_format);
         final TextView tvResult = (TextView)findViewById(R.id.tvResult);

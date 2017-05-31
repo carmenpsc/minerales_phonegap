@@ -1,55 +1,32 @@
 package com.minerales;
 
-import android.content.Context;
-import android.content.ContextWrapper;
+
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import org.apache.cordova.CordovaActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class NuevoMineralActivity extends CordovaActivity {
+public class NuevoMineralActivity extends MenuApp {
 
     String URL_ADD_MINERAL = "https://minerales.herokuapp.com/mineral/";
     String URL_LISTA_MINERALES = "https://minerales.herokuapp.com/minerales/";
@@ -171,6 +148,7 @@ public class NuevoMineralActivity extends CordovaActivity {
                 }
             }
         });
+
     }
 
 
@@ -271,8 +249,6 @@ public class NuevoMineralActivity extends CordovaActivity {
                 }
             }
 
-            ;
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Snackbar bar = Snackbar.make(coordinatorLayout, "Error al conectarse con la base de datos.", Snackbar.LENGTH_LONG)
@@ -286,5 +262,16 @@ public class NuevoMineralActivity extends CordovaActivity {
         });
 
     }
+
+    //Volver atras
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+        intent.putExtra("usuarioLogueado", usuarioLogueado);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

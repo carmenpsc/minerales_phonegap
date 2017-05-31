@@ -20,6 +20,9 @@
 package com.minerales;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import org.apache.cordova.*;
 
 public class MainActivity extends CordovaActivity
@@ -38,4 +41,5 @@ public class MainActivity extends CordovaActivity
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }
+
 }

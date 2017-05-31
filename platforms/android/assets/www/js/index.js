@@ -108,10 +108,6 @@ framework7.onPageInit("login", function(){
                         usuarioLogueado = data._id;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
 
-                        //Acomodo el menu
-                        $('#registro').hide();
-                        $('#listadoM').show();
-
                         //Me comunico con android
                         app.addItem();
                     }
