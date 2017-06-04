@@ -1,12 +1,14 @@
 package com.minerales;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
@@ -72,6 +74,8 @@ public class ListaMineralesActivity extends MenuApp {
                 finish();
             }
         });
+
+        setResult(RESULT_OK,intentPG);
 
     }
 
@@ -143,6 +147,10 @@ public class ListaMineralesActivity extends MenuApp {
     @Override
     public void onBackPressed() {
         cerrarSesion();
+    }
+
+    private void apagar() {
+        super.onBackPressed();
     }
 
 }

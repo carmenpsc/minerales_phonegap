@@ -64,7 +64,8 @@ public class LectorQRActivity extends MenuApp {
                         public void onClick(View v) {
                         }
                     });
-            bar.show();        }
+            bar.show();
+        }
     }
 
 

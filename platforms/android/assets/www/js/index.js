@@ -43,10 +43,13 @@ framework7.onPageInit("registro", function(){
                         success: function(data){
                             console.log("SUCESS");
                             console.log(data);
+
                             framework7.addNotification({
                                 message: 'Registro completado con éxito.',
                                 hold: 4000});
-                            mainView.router.loadPage({pageName: 'login', ignoreCache: true, force: true});
+                             //Limpio el formulario
+                            document.getElementById("registroForm").reset();
+                            mainView.router.back();
 
                             },
                             error: function(jqXHR, textStatus, errorThrown){
@@ -107,6 +110,9 @@ framework7.onPageInit("login", function(){
                         //Se almacena el usuario logueado
                         usuarioLogueado = data._id;
                         console.log("USUARIO LOGUEADO "+usuarioLogueado);
+
+                        //Limpio el formulario
+                        document.getElementById("loginForm").reset();
 
                         //Me comunico con android
                         app.addItem();

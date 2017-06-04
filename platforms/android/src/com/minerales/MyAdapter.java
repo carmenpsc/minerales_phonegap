@@ -155,6 +155,7 @@ public class MyAdapter extends BaseAdapter implements ListAdapter {
                 verMineralActivity.putExtra("usuarioLogueado", usuarioLogueado);
                 verMineralActivity.putExtra("codigoMineral",codigo);
                 context.startActivity(verMineralActivity);
+                listaMineralesActivity.finish();
 
             }
         });

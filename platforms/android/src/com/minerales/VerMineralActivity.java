@@ -2,6 +2,7 @@ package com.minerales;
 
 import android.Manifest;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -306,5 +307,15 @@ public class VerMineralActivity extends MenuApp{
                     public void onScanCompleted(String path, Uri uri) {
                     }
                 });
+    }
+
+    //Volver atras
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ListaMineralesActivity.class);
+        intent.putExtra("usuarioLogueado", usuarioLogueado);
+        startActivity(intent);
+        finish();
     }
 }

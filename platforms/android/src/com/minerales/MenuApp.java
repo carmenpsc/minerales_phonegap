@@ -41,8 +41,7 @@ public class MenuApp extends AppCompatActivity{
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+            apagar();
             }
         });
 
@@ -50,5 +49,9 @@ public class MenuApp extends AppCompatActivity{
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void apagar() {
+        super.onBackPressed();
     }
 }
