@@ -205,7 +205,8 @@ public class VerMineralActivity extends MenuApp{
             case PERMISO_EXTERNAL: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                    String cadena = generarCadena();
+                    generarQR(cadena);
                 }
             }
         }
