@@ -16,6 +16,7 @@ import org.apache.cordova.CordovaActivity;
 
 public class MenuApp extends AppCompatActivity{
 
+    //Creamos y añadimos el menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity, menu);
@@ -32,6 +33,7 @@ public class MenuApp extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    /*Méetodo que cierra a sesion y cierra la app*/
     public void cerrarSesion(){
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(this, R.style.MyDialogTheme);
